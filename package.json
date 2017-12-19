@@ -1,0 +1,24 @@
+{
+  "name": "modstores",
+  "version": "1.0.0",
+  "description": "backend for the mod-stores app ",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "*",
+    "mongoose":"*",
+    "body-parser":"*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MOD-MedicinesOnDemand/Backend.git"
+  },
+  "author": "Alok Singh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MOD-MedicinesOnDemand/Backend/issues"
+  },
+  "homepage": "https://github.com/MOD-MedicinesOnDemand/Backend#readme"
+}
