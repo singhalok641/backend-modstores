@@ -1,25 +1,28 @@
 {
-  "name": "modstores",
+  "name": "modstore",
   "version": "1.0.0",
-  "description": "backend for the mod-stores app ",
+  "description": "",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "dependencies": {
-    "express": "*",
-    "mongoose":"*",
-    "body-parser":"*",
-    "bcrypt":"*"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/MOD-MedicinesOnDemand/Backend.git"
   },
   "author": "Alok Singh",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/MOD-MedicinesOnDemand/Backend/issues"
-  },
-  "homepage": "https://github.com/MOD-MedicinesOnDemand/Backend#readme"
+  "dependencies": {
+    "bcryptjs": "*",
+    "body-parser": "*",
+    "connect-flash": "*",
+    "cookie-parser": "^1.4.1",
+    "express": "*",
+    "express-handlebars": "*",
+    "express-messages": "*",
+    "express-session": "*",
+    "express-validator": "*",
+    "mongodb": "*",
+    "mongoose": "*",
+    "passport": "*",
+    "passport-http": "*",
+    "passport-local": "*"
+  }
 }
