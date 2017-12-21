@@ -1,18 +1,21 @@
-# Node.js login for modstore
+# MEANauthapp
+
+Complete MEAN stack application with authentication using json web tokens
 
 ### Version
-1.1.0
+1.0.0
 
-### Usage
+## Usage
 
 
 ### Installation
 
-Loginapp requires [Node.js](https://nodejs.org/) v4+ to run.
+Install the dependencies
 
 ```sh
 $ npm install
 ```
+Run app
 
 ```sh
 $ npm start
