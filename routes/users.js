@@ -4,6 +4,7 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const User = require('../models/user');
+const Order = require('../models/orders');
 
 // Register
 router.post('/register', (req, res, next) => {
@@ -27,6 +28,8 @@ router.post('/register', (req, res, next) => {
 router.post('/authenticate', (req, res, next) => {
   const username = req.body.username;
   const password = req.body.password;
+
+  console.log("logging in");
 
   User.getUserByUsername(username, (err, user) => {
     if(err) throw err;
@@ -55,6 +58,18 @@ router.post('/authenticate', (req, res, next) => {
         return res.json({success: false, msg: 'Wrong password'});
       }
     });
+  });
+});
+
+//Get Store Orders
+router.get('/orders/:mod_store', (req,res) => {
+  console.log(req.params.mod_store);
+  Order.getOrdersByStore(req.params.mod_store, function(err,orders){
+    if(err){
+      throw err;
+    }
+    console.log(orders);
+    res.send(orders);
   });
 });
 

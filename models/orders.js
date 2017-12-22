@@ -1,11 +1,12 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
+const config = require('../config/database');
 
 //General Schema
-var orderSchema = mongoose.Schema({
+const OrderSchema = mongoose.Schema({
 	order_id:{
 		type:Number,
 		required:true
-	}
+	},
 	status:{
 		type:String,
 		required:true
@@ -20,7 +21,7 @@ var orderSchema = mongoose.Schema({
 	order_time:{
 		type:Date,
 		required:true
-	}
+	},
 	delivery_time:{
 		type:Date,
 		required:true
@@ -37,7 +38,7 @@ var orderSchema = mongoose.Schema({
 		type:Object,
 		required:true
 	},
-	discount:{
+	Discount:{
 		type:Number,
 		required:true
 	},
@@ -53,10 +54,17 @@ var orderSchema = mongoose.Schema({
 		type:String,
 		required:true
 	},
-	modstore:{
-		type:Number;
+	mod_store:{
+		type:String,
 		required:true
 	}
 });
 
-var Order = module.exports = mongoose.model('Order',orderSchema);
+const Order = module.exports = mongoose.model('Order',OrderSchema);
+
+module.exports.getOrdersByStore = function(id,callback) {
+	const query = {mod_store: id}
+  	Order.findOne(query, callback);
+  	console.log(query);
+  	//console.log(Order);
+}
