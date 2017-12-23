@@ -64,7 +64,7 @@ const Order = module.exports = mongoose.model('Order',OrderSchema);
 
 module.exports.getOrdersByStore = function(id,callback) {
 	const query = {mod_store: id}
-  	Order.findOne(query, callback);
+  	Order.find(query, callback);
   	console.log(query);
   	//console.log(Order);
 }
