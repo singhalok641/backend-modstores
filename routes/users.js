@@ -69,7 +69,26 @@ router.get('/orders/:mod_store', (req,res) => {
       throw err;
     }
     console.log(orders);
-    res.send(orders);
+    //Divide the Store orders into active and past orders depending on the status value of the particular order
+    var past_orders=[];
+    var active_orders=[];
+
+    //Loop to divide the orders
+    for(var k=0;k<orders.length;k++)
+    {
+      if(orders[k].status=='delivered'||orders[k].status=='cancelled')
+      {
+        past_orders.push(orders[k]);
+      }
+
+      else
+      {
+        active_orders.push(orders[k]);
+      }
+    }
+
+    res.send(past_orders);
+    
   });
 });
 
