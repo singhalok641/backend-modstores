@@ -87,7 +87,7 @@ router.get('/orders/:mod_store', (req,res) => {
       }
     }
 
-    res.send(past_orders);
+    res.json({past_orders:past_orders, active_orders: active_orders});
     
   });
 });
