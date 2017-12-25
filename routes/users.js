@@ -76,7 +76,7 @@ router.get('/orders/:mod_store', (req,res) => {
     //Loop to divide the orders
     for(var k=0;k<orders.length;k++)
     {
-      if(orders[k].status=='delivered'||orders[k].status=='cancelled')
+      if(orders[k].status=='Delivered'||orders[k].status=='Cancelled')
       {
         past_orders.push(orders[k]);
       }
