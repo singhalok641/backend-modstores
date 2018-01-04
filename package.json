@@ -1,22 +1,38 @@
 {
-  "name": "meanauthapp",
+  "name": "mod-backend",
   "version": "1.0.0",
-  "description": "MEAN stack authentication app",
+  "description": "mod backend",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app"
   },
-  "dependencies":{
-    "express":"*",
-    "mongoose":"*",
-    "bcryptjs":"*",
-    "cors":"*",
-    "jsonwebtoken":"*",
-    "body-parser":"*",
-    "passport":"*",
-    "passport-jwt":"*"
+  "dependencies": {
+    "apicache": "^0.8.4",
+    "babel-cli": "^6.11.4",
+    "babel-register": "^6.9.0",
+    "base64-img": "^1.0.3",
+    "es6-module-loader": "^0.17.11",
+    "express-session": "^1.14.0",
+    "gm": "^1.23.0",
+    "lodash": "^4.15.0",
+    "lwip": "0.0.9",
+    "mailgun-js": "^0.7.12",
+    "morgan": "^1.7.0",
+    "node-fetch": "^1.6.0",
+    "querystring": "^0.2.0",
+    "request": "^2.78.0",
+    "validator": "^5.5.0",
+    "bcryptjs": "*",
+    "body-parser": "*",
+    "cors": "*",
+    "expo-server-sdk": "^2.3.3",
+    "express": "*",
+    "jsonwebtoken": "*",
+    "mongoose": "*",
+    "passport": "*",
+    "passport-jwt": "*"
   },
-  "author": "Brad Traversy",
+  "author": "Alok Singh",
   "license": "ISC"
 }

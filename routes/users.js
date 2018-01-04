@@ -92,6 +92,11 @@ router.get('/orders/:mod_store', (req,res) => {
   });
 });
 
+
+//push-token
+router.post('/push-token')
+
+
 // Profile
 router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res, next) => {
   res.json({user: req.user});
