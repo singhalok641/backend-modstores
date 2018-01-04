@@ -6,7 +6,30 @@ const config = require('../config/database');
 const User = require('../models/user');
 const Order = require('../models/orders');
 
-// Register
+import {pushNotification, listTokenDevice, registerTokenDevice} from '../routes';
+import {secretCodeMiddleware} from '../middlewares';
+
+/**
+ * List token device
+ */
+router.get('/list-token-device', listTokenDevice)
+
+/**
+ * Push notification
+ * @tokenDevice: string
+ * @message: string
+ * @data: object
+ */
+router.post('/push-notification', pushNotification);
+
+/**
+ * Register token device
+ * @tokenDevice: string
+ * @userId: string
+ */
+router.post('/register-token-device', secretCodeMiddleware, registerTokenDevice)
+
+// RegisterUser
 router.post('/register', (req, res, next) => {
   let newUser = new User({
     name: req.body.name,
@@ -24,7 +47,7 @@ router.post('/register', (req, res, next) => {
   });
 });
 
-// Authenticate
+// AuthenticateUser
 router.post('/authenticate', (req, res, next) => {
   const username = req.body.username;
   const password = req.body.password;
@@ -91,11 +114,6 @@ router.get('/orders/:mod_store', (req,res) => {
     
   });
 });
-
-
-//push-token
-router.post('/push-token')
-
 
 // Profile
 router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res, next) => {
