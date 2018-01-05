@@ -15,7 +15,7 @@ async function pushNotification(req, res) {
 			to: tokenDevice,
 			sound: 'default',
 			body: message,
-			data: data
+			data: { data },
 		}]);
 		res.json({receipts})
 	} catch (error) {

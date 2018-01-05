@@ -86,12 +86,12 @@ router.post('/authenticate', (req, res, next) => {
 
 //Get Store Orders
 router.get('/orders/:mod_store', (req,res) => {
-  console.log(req.params.mod_store);
+  //console.log(req.params.mod_store);
   Order.getOrdersByStore(req.params.mod_store, function(err,orders){
     if(err){
       throw err;
     }
-    console.log(orders);
+    //console.log(orders);
     //Divide the Store orders into active and past orders depending on the status value of the particular order
     var past_orders=[];
     var active_orders=[];

@@ -1,6 +1,6 @@
 export const PORT = 1234;
 
-export const SECRET_CODE = 'MAMFRESH_APP';
+export const SECRET_CODE = 'MODAPP';
 
 export const MONGODB_OPTIONS = {
 	database: 'mongodb://127.0.0.1:27017/mamFreshApp'
