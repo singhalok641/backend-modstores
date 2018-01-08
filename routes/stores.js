@@ -32,48 +32,48 @@ router.post('/register-token-device', secretCodeMiddleware, registerTokenDevice)
 // RegisterUser
 router.post('/register', (req, res, next) => {
   let newUser = new User({
-    name: req.body.name,
+    storeName: req.body.storeName,
     email: req.body.email,
-    username: req.body.username,
+    store_id: req.body.store_id,
     password: req.body.password
   });
 
   User.addUser(newUser, (err, user) => {
     if(err){
-      res.json({success: false, msg:'Failed to register user'});
+      res.json({success: false, msg:'Failed to register store'});
     } else {
-      res.json({success: true, msg:'User registered'});
+      res.json({success: true, msg:'Store registered'});
     }
   });
 });
 
 // AuthenticateUser
 router.post('/authenticate', (req, res, next) => {
-  const username = req.body.username;
+  const store_id = req.body.store_id;
   const password = req.body.password;
 
   //console.log("logging in");
 
-  User.getUserByUsername(username, (err, user) => {
+  User.getUserByStoreId(store_id, (err, store) => {
     if(err) throw err;
-    if(!user){
-      return res.json({success: false, msg: 'User not found'});
+    if(!store){
+      return res.json({success: false, msg: 'Store not found'});
     }
 
-    User.comparePassword(password, user.password, (err, isMatch) => {
+    User.comparePassword(password, store.password, (err, isMatch) => {
       if(err) throw err;
       if(isMatch){
-        const token = jwt.sign(user.toJSON(), config.secret, {
+        const token = jwt.sign(store.toJSON(), config.secret, {
           expiresIn: 604800 // 1 week
         });
 
         res.json({
           success: true,
           token: 'JWT '+token,
-          user: {
-            id: user._id,
-            name: user.name,
-            username: user.username,
+          store: {
+            id: store._id,
+            name: store.storeName,
+            store_id: user.store_id,
             email: user.email
           }
         });
