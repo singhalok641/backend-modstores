@@ -17,7 +17,7 @@ async function pushNotification(req, res) {
 			body: message,
 			data: { data },
 		}]);
-		res.json({receipts})
+		res.json(receipts[0])
 	} catch (error) {
 		console.error(error);
 	}

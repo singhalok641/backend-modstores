@@ -4,15 +4,16 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const passport = require('passport');
 const mongoose = require('mongoose');
-const config = require('./config/database');
+const db = require('./config/database');
+//const http = require('http');
 
 // Connect To Database
-mongoose.connect(config.database);
+mongoose.connect(db.database);
 
 // On Connection
 mongoose.Promise = global.Promise;
 mongoose.connection.on('connected', () => {
-  console.log('Connected to database '+config.database);
+  console.log('Connected to database '+db.database);
 });
 
 // On Error

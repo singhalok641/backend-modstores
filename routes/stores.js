@@ -3,8 +3,9 @@ const router = express.Router();
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
-const User = require('../models/user');
+const Store = require('../models/store');
 const Order = require('../models/orders');
+const users = require('./users');
 
 import {pushNotification, listTokenDevice, registerTokenDevice} from '../routes';
 import {secretCodeMiddleware} from '../middlewares';
@@ -29,16 +30,24 @@ router.post('/push-notification', pushNotification);
  */
 router.post('/register-token-device', secretCodeMiddleware, registerTokenDevice)
 
-// RegisterUser
+//routes for MOD user account creation
+//router.get('/users/new', users.showCreate);
+router.post('/users', users.create);
+router.get('/users/:id/verify', users.showVerify);
+router.post('/users/:id/verify', users.verify);
+router.post('/users/:id/resend', users.resend);
+router.get('/users/:id', users.showUser);
+
+// Register Store
 router.post('/register', (req, res, next) => {
-  let newUser = new User({
+  let newStore = new Store({
     storeName: req.body.storeName,
     email: req.body.email,
     store_id: req.body.store_id,
     password: req.body.password
   });
 
-  User.addUser(newUser, (err, user) => {
+  Store.addStore(newStore, (err, store) => {
     if(err){
       res.json({success: false, msg:'Failed to register store'});
     } else {
@@ -47,20 +56,20 @@ router.post('/register', (req, res, next) => {
   });
 });
 
-// AuthenticateUser
+// AuthenticateStore
 router.post('/authenticate', (req, res, next) => {
   const store_id = req.body.store_id;
   const password = req.body.password;
 
-  //console.log("logging in");
+  console.log("store_id:"+store_id);
 
-  User.getUserByStoreId(store_id, (err, store) => {
+  Store.getStoreByStoreId(store_id, (err, store) => {
     if(err) throw err;
     if(!store){
       return res.json({success: false, msg: 'Store not found'});
     }
 
-    User.comparePassword(password, store.password, (err, isMatch) => {
+    Store.comparePassword(password, store.password, (err, isMatch) => {
       if(err) throw err;
       if(isMatch){
         const token = jwt.sign(store.toJSON(), config.secret, {
@@ -73,8 +82,8 @@ router.post('/authenticate', (req, res, next) => {
           store: {
             id: store._id,
             name: store.storeName,
-            store_id: user.store_id,
-            email: user.email
+            store_id: store.store_id,
+            email: store.email
           }
         });
       } else {
@@ -115,9 +124,9 @@ router.get('/orders/:mod_store', (req,res) => {
   });
 });
 
-// Profile
+/*// Profile
 router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res, next) => {
   res.json({user: req.user});
-});
+});*/
 
 module.exports = router;

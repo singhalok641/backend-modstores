@@ -34,7 +34,13 @@
     "passport-jwt": "*",
     "querystring": "^0.2.0",
     "request": "^2.78.0",
-    "validator": "^5.5.0"
+    "validator": "^5.5.0",
+    "authy": "^1.2.0",
+    "bcrypt": "^0.8.1",
+    "connect-flash": "^0.1.1",
+    "dotenv-safe": "^3.0.0",
+    "eslint": "^3.19.0",
+    "twilio": ">=3.0.0-rc.16 < 3.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.10.1",
