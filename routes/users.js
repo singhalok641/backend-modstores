@@ -97,17 +97,29 @@ exports.resend = function(request, response) {
 
 // Check if user exists and login user
 exports.login = function(request, response) {
-    /*const params = request.body;
-    const query = {phone:params.phone};
-    User.find(query, response);*/
+    const query = {phone:request.params.phone};
+    //console.log(request.params.phone);
+    User.findOne(query, function(err, user) {
+        if(err){
+            throw err;
+        }
+        response.json({success: true, user:user});
+    });
     // Load user model
-    User.findById(request.params.id, function(err, user) {
+    /*User.findById(request.params.id, function(err, user) {
         if (err || !user) {
             return die('User not found for this ID.');
         }
         // If we find the user, we send the response
         response.json({success:true});
-    });
+    });*/
+
+    /*User.findByPhoneNumber(request.params.phone, function(err,user) {
+        if(err){
+            throw err;
+        }
+        response.json({success:true,user:user});
+    });*/
 
     // respond with an error
     function die(message) {

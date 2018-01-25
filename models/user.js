@@ -125,10 +125,10 @@ UserSchema.methods.sendMessage = function(message, successCallback, errorCallbac
   };
 
 // Find user by phone number
-UserSchema.methods.findByPhoneNumber = function(phoneNumber, callback) {
+module.exports.findByPhoneNumber = function(phoneNumber, callback) {
     const query = {phone: phoneNumber}
     User.find(query, callback);
-}
+};
 
 // Export user model
 module.exports = mongoose.model('User', UserSchema);

@@ -32,12 +32,12 @@ router.post('/register-token-device', secretCodeMiddleware, registerTokenDevice)
 
 //routes for MOD user account creation
 //router.get('/users/new', users.showCreate);
-router.post('/users/:id/login', users.login);
+router.post('/users/:phone/login', users.login);
 router.post('/users', users.create);
-router.get('/users/:id/verify', users.showVerify);
+//router.get('/users/:id/verify', users.showVerify);
 router.post('/users/:id/verify', users.verify);
 router.post('/users/:id/resend', users.resend);
-router.get('/users/:id', users.showUser);
+//router.get('/users/:id', users.showUser);
 
 // Register Store
 router.post('/register', (req, res, next) => {
@@ -94,7 +94,7 @@ router.post('/authenticate', (req, res, next) => {
 
 //Get Store Orders
 router.get('/orders/:mod_store', (req,res) => {
-  //console.log(req.params.mod_store);
+  console.log(req.params.mod_store);
   Order.getOrdersByStore(req.params.mod_store, function(err,orders){
     if(err){
       throw err;
