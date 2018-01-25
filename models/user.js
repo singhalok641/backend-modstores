@@ -22,6 +22,7 @@ const UserSchema = new mongoose.Schema({
     phone: {
         type: String,
         required: true,
+        unique: true,
     },
     verified: {
         type: Boolean,
@@ -108,8 +109,7 @@ UserSchema.methods.verifyAuthyToken = function(otp, cb) {
 };
 
 // Send a text message via twilio to this user
-UserSchema.methods.sendMessage =
-  function(message, successCallback, errorCallback) {
+UserSchema.methods.sendMessage = function(message, successCallback, errorCallback) {
       const self = this;
       const toNumber = `+${self.countryCode}${self.phone}`;
 
@@ -123,6 +123,12 @@ UserSchema.methods.sendMessage =
         errorCallback(err);
       });
   };
+
+// Find user by phone number
+UserSchema.methods.findByPhoneNumber = function(phoneNumber, callback) {
+    const query = {phone: phoneNumber}
+    User.find(query, callback);
+}
 
 // Export user model
 module.exports = mongoose.model('User', UserSchema);

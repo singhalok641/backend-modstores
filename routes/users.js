@@ -18,7 +18,7 @@ exports.create = function(request, response) {
         fullName: params.fullName,
         email: params.email,
         phone: params.phone,
-        countryCode: params.countryCode,
+        countryCode: '+91',
         password: params.password,
     });
 
@@ -31,7 +31,6 @@ exports.create = function(request, response) {
                 + ' account - note that all fields are required. Please'
                 + ' double-check your input and try again.');*/
             response.json({success: false, msg:'Failed to register user'});
-
             //response.redirect('/users/new');
         } else {
             // If the user is created successfully, send them an account
@@ -43,9 +42,9 @@ exports.create = function(request, response) {
                     response.json({error: 'There was a problem sending your token - sorry :('});
                 }
 
-                // Send to token verification page
+                // call token verification function
                 //response.redirect('/users/'+doc._id+'/verify');
-                response.json({success: true, msg:'User registered'});
+                response.json({success: true, msg:'User registered', user: doc});
             });
         }
     });
@@ -94,6 +93,28 @@ exports.resend = function(request, response) {
     }
 };
 
+// Check if user exists and login user
+exports.login = function(request, response) {
+    /*const params = request.body;
+    const query = {phone:params.phone};
+    User.find(query, response);*/
+    // Load user model
+    User.findById(request.params.id, function(err, user) {
+        if (err || !user) {
+            return die('User not found for this ID.');
+        }
+        // If we find the user, we send the response
+        response.json({success:true});
+    });
+
+    // respond with an error
+    function die(message) {
+        //request.flash('errors', message);
+        //response.redirect('/users/'+request.params.id+'/verify');
+        response.json({message:message});
+    }
+};
+
 // Handle submission of verification token
 exports.verify = function(request, response) {
     let user = {};
@@ -133,11 +154,11 @@ exports.verify = function(request, response) {
           // show success page
           //request.flash('successes', message);
           //response.redirect(`/users/${user._id}`);
-          response.send("Success");
+          response.json({message:"success"});
         }, function(err) {
           /*request.flash('errors', 'You are signed up, but '
               + 'we could not send you a message. Our bad :(');*/
-            response.send("You are signed up but we could not send you a message");
+            response.json({message:"You are signed up but we could not send you a message"});
         });
     }
 
@@ -145,7 +166,7 @@ exports.verify = function(request, response) {
     function die(message) {
         //request.flash('errors', message);
         //response.redirect('/users/'+request.params.id+'/verify');\
-        response.send(message);
+        response.json({message:message});
     }
 };
 
@@ -158,13 +179,13 @@ exports.showUser = function(request, response, next) {
             return next();
         }
 
-        response.render('users/show', {
+        response.json({
             title: 'Hi there ' + user.fullName + '!',
             user: user,
             // any errors
-            errors: request.flash('errors'),
+            //errors: request.flash('errors'),
             // any success messages
-            successes: request.flash('successes'),
+            //successes: request.flash('successes'),
         });
     });
 };
