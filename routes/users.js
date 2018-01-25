@@ -82,14 +82,16 @@ exports.resend = function(request, response) {
                 + 'retry.');
         }
 
-        request.flash('successes', 'Code re-sent!');
-        response.redirect('/users/'+request.params.id+'/verify');
+        //request.flash('successes', 'Code re-sent!');
+        //response.redirect('/users/'+request.params.id+'/verify');
+        response.json({message: "code re-sent!"});
     }
 
     // respond with an error
     function die(message) {
-        request.flash('errors', message);
-        response.redirect('/users/'+request.params.id+'/verify');
+        //request.flash('errors', message);
+        //response.redirect('/users/'+request.params.id+'/verify');
+        response.json({message: message});
     }
 };
 
