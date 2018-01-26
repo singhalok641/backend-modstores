@@ -63,9 +63,9 @@ UserSchema.pre('save', function(next) {
 });
 
 // Test candidate password
-UserSchema.methods.comparePassword = function(candidatePassword, cb) {
-    const self = this;
-    bcrypt.compare(candidatePassword, self.password, function(err, isMatch) {
+UserSchema.methods.comparePassword = function(candidatePassword, hash, cb) {
+    //const self = this;
+    bcrypt.compare(candidatePassword, hash, function(err, isMatch) {
         if (err) return cb(err);
         cb(null, isMatch);
     });
@@ -123,12 +123,6 @@ UserSchema.methods.sendMessage = function(message, successCallback, errorCallbac
         errorCallback(err);
       });
   };
-
-// Find user by phone number
-module.exports.findByPhoneNumber = function(phoneNumber, callback) {
-    const query = {phone: phoneNumber}
-    User.find(query, callback);
-};
 
 // Export user model
 module.exports = mongoose.model('User', UserSchema);

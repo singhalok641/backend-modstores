@@ -30,10 +30,11 @@ router.post('/push-notification', pushNotification);
  */
 router.post('/register-token-device', secretCodeMiddleware, registerTokenDevice)
 
-//routes for MOD user account creation
+//routes for MOD user account creation and login
 //router.get('/users/new', users.showCreate);
-router.post('/users/:phone/login', users.login);
+router.post('/users/:phone/userExists', users.userExists);
 router.post('/users', users.create);
+router.post('/users/login', users.login);
 //router.get('/users/:id/verify', users.showVerify);
 router.post('/users/:id/verify', users.verify);
 router.post('/users/:id/resend', users.resend);

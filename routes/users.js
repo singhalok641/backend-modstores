@@ -1,4 +1,6 @@
 const User = require('../models/user');
+const jwt = require('jsonwebtoken');
+const config = require('../config/database');
 
 // Display a form that allows users to sign up for a new account
 exports.showCreate = function(request, response) {
@@ -96,12 +98,12 @@ exports.resend = function(request, response) {
 };
 
 // Check if user exists and login user
-exports.login = function(request, response) {
+exports.userExists = function(request, response) {
     const query = {phone:request.params.phone};
-    //console.log(request.params.phone);
+    console.log(request.params.phone);
     User.findOne(query, function(err, user) {
-        if(err){
-            throw err;
+        if(err || !user){
+            return die('User not found for this ID.');
         }
         response.json({success: true, user:user});
     });
@@ -114,18 +116,52 @@ exports.login = function(request, response) {
         response.json({success:true});
     });*/
 
-    /*User.findByPhoneNumber(request.params.phone, function(err,user) {
-        if(err){
-            throw err;
-        }
-        response.json({success:true,user:user});
-    });*/
+
 
     // respond with an error
     function die(message) {
         //request.flash('errors', message);
         //response.redirect('/users/'+request.params.id+'/verify');
-        response.json({message:message});
+        response.json({success: false ,message:message});
+    }
+};
+
+exports.login = function(request, response) {
+    const params = request.body;
+    const query = {phone:params.phone};
+    const password = params.password;
+    console.log(params.phone);
+
+    User.findOne(query, function(err, user) {
+        if(err) throw err;
+        if(!user){
+            return die('User not found for this ID.');
+        }
+
+        user.comparePassword(password, user.password, (err, isMatch) => {
+            if(err) throw err;
+            if(isMatch){
+                const token = jwt.sign(user.toJSON(), config.secret, {
+                    expiresIn: 604800 // 1 week
+                });
+
+                response.json({
+                    success: true,
+                    token: 'JWT '+token,
+                    user: user
+                })
+            }
+            else{
+                return response.json({success: false, msg: 'Wrong password'});
+            }
+        });
+    });
+
+    // respond with an error
+    function die(message) {
+        //request.flash('errors', message);
+        //response.redirect('/users/'+request.params.id+'/verify');
+        response.json({success: false ,message:message});
     }
 };
 
