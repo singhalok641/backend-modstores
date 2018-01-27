@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Order = require('../models/orders');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 
@@ -204,11 +205,11 @@ exports.verify = function(request, response) {
           // show success page
           //request.flash('successes', message);
           //response.redirect(`/users/${user._id}`);
-          response.json({message:"success"});
+          response.json({success:true, message:"success"});
         }, function(err) {
           /*request.flash('errors', 'You are signed up, but '
               + 'we could not send you a message. Our bad :(');*/
-            response.json({message:"You are signed up but we could not send you a message"});
+            response.json({success:true, message:"You are signed up but we could not send you a message"});
         });
     }
 
@@ -216,7 +217,7 @@ exports.verify = function(request, response) {
     function die(message) {
         //request.flash('errors', message);
         //response.redirect('/users/'+request.params.id+'/verify');\
-        response.json({message:message});
+        response.json({success:false ,message:message});
     }
 };
 
@@ -237,5 +238,33 @@ exports.showUser = function(request, response, next) {
             // any success messages
             //successes: request.flash('successes'),
         });
+    });
+};
+
+exports.addOrder = function(request, response, next) {
+    let newOrder = new Order({
+        order_id:request.body.order_id,
+        status:request.body.status,
+        itemsRequiringPrescription:request.body.itemsRequiringPrescription,
+        itemsNotRequiringPrescription:request.body.itemsNotRequiringPrescription,
+        prescription:request.body.prescription,
+        order_time:request.body.order_time,
+        delivery_time:request.body.delivery_time,
+        delivery_address:request.body.delivery_address,
+        mrp_total:request.body.mrp_total,
+        coupon:request.body.coupon,
+        discount:request.body.discount,
+        delivery_charge:request.body.delivery_charge,
+        total:request.body.total,
+        payment_mode:request.body.payment_mode,
+        store_id:request.body.store_id
+    })
+
+    Order.addOrder(newOrder, (err,order) =>{
+        if(err){
+          response.json({success: false, msg:'Failed to confirm your order',"error":err});
+        } else {
+          response.json({success: true, msg:'Awaiting modstore confirmation!!', order:order});
+        }
     });
 };

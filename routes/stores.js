@@ -30,7 +30,10 @@ router.post('/push-notification', pushNotification);
  */
 router.post('/register-token-device', secretCodeMiddleware, registerTokenDevice)
 
+
+//ROUTES FOR MOD USER APP
 //routes for MOD user account creation and login
+
 //router.get('/users/new', users.showCreate);
 router.post('/users/:phone/userExists', users.userExists);
 router.post('/users', users.create);
@@ -40,6 +43,10 @@ router.post('/users/:id/verify', users.verify);
 router.post('/users/:id/resend', users.resend);
 //router.get('/users/:id', users.showUser);
 
+// routes for orders and cart screen rendering
+router.post('/users/addOrder', users.addOrder);
+
+//ROUTES FOR MOD STORE APP
 // Register Store
 router.post('/register', (req, res, next) => {
   let newStore = new Store({

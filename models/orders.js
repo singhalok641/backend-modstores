@@ -11,8 +11,12 @@ const OrderSchema = mongoose.Schema({
 		type:String,
 		required:true
 	},
-	items:{
-		type:Array,
+	itemsRequiringPrescription:{
+		type:Object,
+		required:true
+	},
+	itemsNotRequiringPrescription:{
+		type:Object,
 		required:true
 	},
 	prescription:{
@@ -20,25 +24,25 @@ const OrderSchema = mongoose.Schema({
 	},
 	order_time:{
 		type:Date,
-		required:true
+		//required:true
 	},
 	delivery_time:{
 		type:Date,
-		required:true
+		//required:true
 	},
 	delivery_address:{
 		type:String,
 		required:true
 	},
-	MRP_total:{
+	mrp_total:{
 		type:Number,
 		required:true
 	},
-	Coupon:{
+	coupon:{
 		type:Object,
 		required:true
 	},
-	Discount:{
+	discount:{
 		type:Number,
 		required:true
 	},
@@ -54,7 +58,7 @@ const OrderSchema = mongoose.Schema({
 		type:String,
 		required:true
 	},
-	mod_store:{
+	store_id:{
 		type:String,
 		required:true
 	}
@@ -65,4 +69,8 @@ const Order = module.exports = mongoose.model('Order',OrderSchema);
 module.exports.getOrdersByStore = function(store_id,callback) {
 	const query = {store_id: store_id}
   	Order.find(query, callback);
+}
+
+module.exports.addOrder = function(newOrder,callback) {
+	newOrder.save(callback);
 }
