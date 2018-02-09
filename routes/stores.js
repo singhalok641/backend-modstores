@@ -43,8 +43,11 @@ router.post('/users/:id/verify', users.verify);
 router.post('/users/:id/resend', users.resend);
 //router.get('/users/:id', users.showUser);
 
-// routes for orders and cart screen rendering
+//route for addingOrders 
 router.post('/users/addOrder', users.addOrder);
+
+//route for addingCartDetails
+router.post('/users/addProduct', users.addProduct);
 
 //ROUTES FOR MOD STORE APP
 // Register Store

@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const Order = require('../models/orders');
+const Product = require('../models/product');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 
@@ -265,6 +266,28 @@ exports.addOrder = function(request, response, next) {
           response.json({success: false, msg:'Failed to confirm your order',"error":err});
         } else {
           response.json({success: true, msg:'Awaiting modstore confirmation!!', order:order});
+        }
+    });
+};
+
+exports.addProduct = function(request, response, next) {
+    let newProduct = new Product({
+        product_id:request.body.product_id,
+        name:request.body.name,
+        manufacturer:request.body.manufacturer,
+        description:request.body.description,
+        price:request.body.price,
+        category:request.body.category,
+        sub_category:request.body.sub_category,
+        store_id:request.body.store_id,
+        user_id:request.body.user_id
+    })
+
+    Product.addProduct(newProduct, (err,product) =>{
+        if(err){
+          response.json({success: false, msg:'Failed to add new product',"error":err});
+        } else {
+          response.json({success: true, msg:'Added new product to the database', product:product});
         }
     });
 };
