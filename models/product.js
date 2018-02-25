@@ -5,7 +5,8 @@ const config = require('../config/database');
 const ProductSchema = mongoose.Schema({
 	product_id:{
 		type:Number,
-		required:true
+		required:true,
+		unique:true
 	},
 	name:{
 		type:String,
@@ -28,14 +29,6 @@ const ProductSchema = mongoose.Schema({
 	},
 	sub_category:{
 		type:String,
-		required:true
-	},
-	store_id:{
-		type:String,
-		required:true
-	},
-	user_id:{
-		type:Object,
 		required:true
 	}
 });

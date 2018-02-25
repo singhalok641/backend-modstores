@@ -46,7 +46,7 @@ router.post('/users/:id/resend', users.resend);
 //route for addingOrders 
 router.post('/users/addOrder', users.addOrder);
 
-//route for addingCartDetails
+//route for addingProduct
 router.post('/users/addProduct', users.addProduct);
 
 //ROUTES FOR MOD STORE APP

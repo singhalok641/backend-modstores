@@ -278,9 +278,7 @@ exports.addProduct = function(request, response, next) {
         description:request.body.description,
         price:request.body.price,
         category:request.body.category,
-        sub_category:request.body.sub_category,
-        store_id:request.body.store_id,
-        user_id:request.body.user_id
+        sub_category:request.body.sub_category
     })
 
     Product.addProduct(newProduct, (err,product) =>{

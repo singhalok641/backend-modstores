@@ -5,7 +5,8 @@ const config = require('../config/database');
 const OrderSchema = mongoose.Schema({
 	order_id:{
 		type:Number,
-		required:true
+		required:true,
+		unique:true
 	},
 	status:{
 		type:String,
