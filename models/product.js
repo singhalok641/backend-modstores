@@ -9,27 +9,32 @@ const ProductSchema = mongoose.Schema({
 		unique:true
 	},
 	name:{
-		type:String,
-		required:true
+		type: String,
+		required: true,
+	},
+	imagePath:{
+		type: String,
+		required: true
 	},
 	manufacturer:{
-		type:String,
-		//required:true
+		type: String,
+		required:true
 	},
 	description:{
-		type:String,
-		required:true
+		type: String,
+		required: true
 	},
 	price:{
-		type:Number
+		type: Number,
+		required: true
 	},
 	category:{
-		type:String,
-		required:true
+		type: String,
+		required: true
 	},
 	sub_category:{
-		type:String,
-		required:true
+		type: String,
+		required: true
 	}
 });
 

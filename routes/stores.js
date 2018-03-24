@@ -48,6 +48,8 @@ router.post('/users/addOrder', users.addOrder);
 
 //route for addingProduct
 router.post('/users/addProduct', users.addProduct);
+//route for add-to-cart
+router.get('/users/addToCart/:id', users.addToCart);
 
 //routes for cart
 //router.post('/users/addToCart', users.addToCart);

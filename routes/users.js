@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const Order = require('../models/orders');
 const Product = require('../models/product');
+const Cart = require('../models/cart');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 
@@ -274,6 +275,7 @@ exports.addProduct = function(request, response, next) {
     let newProduct = new Product({
         product_id:request.body.product_id,
         name:request.body.name,
+        imagePath:request.body.imagePath,
         manufacturer:request.body.manufacturer,
         description:request.body.description,
         price:request.body.price,
@@ -290,3 +292,20 @@ exports.addProduct = function(request, response, next) {
     });
 };
 
+exports.addToCart = function(request, response, next) {
+    var product_id = request.params.id;
+    console.log(product_id);
+    var cart = new Cart(request.session.cart ?  request.session.cart : {});
+    console.log(request.session.cart);
+    Product.findById(request.params.id, function(err, product){
+        if (err) {
+            response.json({success: false});
+        }
+        //console.log(product);
+        cart.add(product, product.id);
+            request.session.cart = cart;
+            console.log(request.session.cart);
+            response.json({success:true});
+    });
+
+};
