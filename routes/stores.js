@@ -49,6 +49,9 @@ router.post('/users/addOrder', users.addOrder);
 //route for addingProduct
 router.post('/users/addProduct', users.addProduct);
 
+//routes for cart
+//router.post('/users/addToCart', users.addToCart);
+
 //ROUTES FOR MOD STORE APP
 // Register Store
 router.post('/register', (req, res, next) => {

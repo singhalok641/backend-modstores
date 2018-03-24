@@ -9,8 +9,34 @@ const twilioClient = require('twilio')(config.accountSid, config.authToken);
 // Used to generate password hash
 const SALT_WORK_FACTOR = 10;
 
+// var userCartSchema = new mongoose.Schema({
+//     cart_id:{
+//         type:Number,
+//         required:true,
+//         unique:true
+//     },
+//     itemsRequiringPrescription:[],
+//     itemsNotRequiringPrescription:[],
+//     mrp_total:{
+//         type:Number,
+//         required:true
+//     },
+//     coupon:{
+//         type:Object,
+//         required:true
+//     },
+//     discount:{
+//         type:Number,
+//         required:true
+//     },
+//     total:{
+//         type:Number,
+//         required:true
+//     }   
+// });
+
 // Define user model schema
-const UserSchema = new mongoose.Schema({
+var UserSchema = new mongoose.Schema({
     fullName: {
         type: String,
         required: true,
@@ -37,7 +63,7 @@ const UserSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-    },
+    }
 });
 
 // Middleware executed before save - hash the user's password

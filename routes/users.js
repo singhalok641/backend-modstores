@@ -289,3 +289,4 @@ exports.addProduct = function(request, response, next) {
         }
     });
 };
+
