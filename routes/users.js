@@ -244,21 +244,30 @@ exports.showUser = function(request, response, next) {
 };
 
 exports.addOrder = function(request, response, next) {
+
+    if(!request.session.cart){
+        response.json({message:"session expired"});
+    }
+
+    var cart = new Cart(request.session.cart);
+
     let newOrder = new Order({
         order_id:request.body.order_id,
         status:request.body.status,
-        itemsRequiringPrescription:request.body.itemsRequiringPrescription,
-        itemsNotRequiringPrescription:request.body.itemsNotRequiringPrescription,
+        cart:cart,
+        // itemsRequiringPrescription:request.body.itemsRequiringPrescription,
+        // itemsNotRequiringPrescription:request.body.itemsNotRequiringPrescription,
         prescription:request.body.prescription,
         order_time:request.body.order_time,
         delivery_time:request.body.delivery_time,
         delivery_address:request.body.delivery_address,
-        mrp_total:request.body.mrp_total,
-        coupon:request.body.coupon,
-        discount:request.body.discount,
-        delivery_charge:request.body.delivery_charge,
-        total:request.body.total,
+        //mrp_total:request.body.mrp_total,
+        //coupon:request.body.coupon,
+        //discount:request.body.discount,
+        //delivery_charge:request.body.delivery_charge,
+        //total:request.body.total,
         payment_mode:request.body.payment_mode,
+        payment_id:request.body.payment_id,
         store_id:request.body.store_id
     })
 

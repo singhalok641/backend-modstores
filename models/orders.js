@@ -8,16 +8,12 @@ const OrderSchema = mongoose.Schema({
 		required:true,
 		unique:true
 	},
+	cart: {
+		type: Object, 
+		required: true
+	},
 	status:{
 		type:String,
-		required:true
-	},
-	itemsRequiringPrescription:{
-		type:Object,
-		required:true
-	},
-	itemsNotRequiringPrescription:{
-		type:Object,
 		required:true
 	},
 	prescription:{
@@ -35,29 +31,13 @@ const OrderSchema = mongoose.Schema({
 		type:String,
 		required:true
 	},
-	mrp_total:{
-		type:Number,
-		required:true
-	},
-	coupon:{
-		type:Object,
-		required:true
-	},
-	discount:{
-		type:Number,
-		required:true
-	},
-	delivery_charge:{
-		type:Number,
-		required:true
-	},
-	total:{
-		type:Number,
-		required:true
-	},
 	payment_mode:{
 		type:String,
 		required:true
+	},
+	payment_id:{
+		type:String,
+		required: true
 	},
 	store_id:{
 		type:String,
