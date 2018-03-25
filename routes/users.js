@@ -316,5 +316,25 @@ exports.addToCart = function(request, response, next) {
             console.log(request.session.cart);
             response.json({success:true});
     });
-
 };
+
+exports.reduceByOne = function(request, response, next) {
+    var productId = request.params.id;
+    var cart = new Cart(request.session.cart ? request.session.cart : {});
+
+    cart.reduceByOne(productId);
+    request.session.cart = cart;
+    console.log(request.session.cart);
+    response.json({message:"reduced one item"});
+}
+
+exports.removeItem = function(request, response, next) {
+    var productId = request.params.id;
+    var cart = new Cart(request.session.cart ? request.session.cart : {});
+
+    cart.removeItem(productId);
+    request.session.cart = cart;
+    console.log(request.session.cart);
+    response.json({message:"removed item"});
+}
+
