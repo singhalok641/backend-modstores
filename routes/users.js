@@ -312,9 +312,9 @@ exports.addToCart = function(request, response, next) {
         }
         //console.log(product);
         cart.add(product, product.id);
-            request.session.cart = cart;
-            console.log(request.session.cart);
-            response.json({success:true});
+        request.session.cart = cart;
+        console.log(request.session.cart);
+        response.json({success:true, cart: cart});
     });
 };
 
@@ -338,3 +338,15 @@ exports.removeItem = function(request, response, next) {
     response.json({message:"removed item"});
 }
 
+exports.getProducts = function(request, response, next){
+    var productCategory = request.params.category;
+    console.log(productCategory);
+
+    Product.getProductsByCategory(productCategory, function(err, products){
+        if(err){
+            throw err;
+        }
+
+        response.json({success: true, products: products});
+    });
+}

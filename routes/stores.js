@@ -48,14 +48,15 @@ router.post('/users/addOrder', users.addOrder);
 
 //route for addingProduct
 router.post('/users/addProduct', users.addProduct);
+//routes for fetching products
+router.get('/users/getProducts/:category', users.getProducts);
 
 //routes for cart
 router.get('/users/addToCart/:id', users.addToCart);
 router.get('/users/reduceByOne/:id',users.reduceByOne);
 router.get('/users/removeItem/:id',users.removeItem);
 
-//routes for cart
-//router.post('/users/addToCart', users.addToCart);
+
 
 //ROUTES FOR MOD STORE APP
 // Register Store
