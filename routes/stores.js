@@ -55,8 +55,7 @@ router.get('/users/getProducts/:category', users.getProducts);
 router.get('/users/addToCart/:id', users.addToCart);
 router.get('/users/reduceByOne/:id',users.reduceByOne);
 router.get('/users/removeItem/:id',users.removeItem);
-
-
+router.get('/users/getCart', users.getCart);
 
 //ROUTES FOR MOD STORE APP
 // Register Store

@@ -285,7 +285,7 @@ exports.addProduct = function(request, response, next) {
         product_id:request.body.product_id,
         name:request.body.name,
         imagePath:request.body.imagePath,
-        manufacturer:request.body.manufacturer,
+        brand:request.body.brand,
         description:request.body.description,
         price:request.body.price,
         category:request.body.category,
@@ -303,17 +303,22 @@ exports.addProduct = function(request, response, next) {
 
 exports.addToCart = function(request, response, next) {
     var product_id = request.params.id;
-    console.log(product_id);
     var cart = new Cart(request.session.cart ?  request.session.cart : {});
-    console.log(request.session.cart);
     Product.findById(request.params.id, function(err, product){
         if (err) {
             response.json({success: false});
         }
-        //console.log(product);
-        cart.add(product, product.id);
+        cart.add(product, product_id);
         request.session.cart = cart;
-        console.log(request.session.cart);
+        //console.log(cart);
+        /*Cart.addCart(cart, (err, cart) => {
+            if(err){
+                response.json({success:false, message: err});
+            }
+            else{
+                response.json({success:true, cart: cart});
+            }
+        });*/
         response.json({success:true, cart: cart});
     });
 };
@@ -338,6 +343,14 @@ exports.removeItem = function(request, response, next) {
     response.json({message:"removed item"});
 }
 
+exports.getCart = function(request, response, next){
+    if (!request.session.cart) {
+        response.json({products: null});
+    } 
+    var cart = new Cart(request.session.cart);
+    response.json({products: cart.generateArray(), totalPrice: cart.totalPrice});
+}
+
 exports.getProducts = function(request, response, next){
     var productCategory = request.params.category;
     console.log(productCategory);
@@ -346,7 +359,6 @@ exports.getProducts = function(request, response, next){
         if(err){
             throw err;
         }
-
         response.json({success: true, products: products});
     });
 }

@@ -8,33 +8,22 @@ const CartSchema = mongoose.Schema({
 		required:true,
 		unique:true
 	},
-	itemsRequiringPrescription:{
+	items:{
 		type:Object,
 		required:true
 	},
-	itemsNotRequiringPrescription:{
-		type:Object,
-		required:true
-	},
-	mrp_total:{
+	totalQty:{
 		type:Number,
 		required:true
 	},
-	coupon:{
-		type:Object,
-		required:true
-	},
-	discount:{
-		type:Number,
-		required:true
-	},
-	total:{
+	totalPrice:{
 		type:Number,
 		required:true
 	},
 	user_id:{
 		type:String,
-		required:true
+		required:true,
+		unique: true
 	}
 });
 
@@ -82,3 +71,8 @@ module.exports = function Cart(oldCart) {
 		return arr;
 	};
 }
+
+/*module.exports.addCart = function(cart,callback) {
+	console.log(cart);
+	cart.save(callback);
+}*/

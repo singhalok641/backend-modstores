@@ -16,7 +16,7 @@ const ProductSchema = mongoose.Schema({
 		type: String,
 		required: true
 	},
-	manufacturer:{
+	brand:{
 		type: String,
 		required:true
 	},
