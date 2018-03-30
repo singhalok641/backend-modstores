@@ -348,7 +348,7 @@ exports.getCart = function(request, response, next){
         response.json({products: null});
     } 
     var cart = new Cart(request.session.cart);
-    response.json({products: cart.generateArray(), totalPrice: cart.totalPrice});
+    response.json({products: cart.generateArray(), totalPrice: cart.totalPrice, totalQty: cart.totalQty});
 }
 
 exports.getProducts = function(request, response, next){
