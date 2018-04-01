@@ -54,6 +54,7 @@ router.get('/users/getProducts/:category', users.getProducts);
 //routes for cart
 router.get('/users/addToCart/:id', users.addToCart);
 router.get('/users/reduceByOne/:id',users.reduceByOne);
+router.get('/users/increaseByOne/:id',users.increaseByOne);
 router.get('/users/removeItem/:id',users.removeItem);
 router.get('/users/getCart', users.getCart);
 
