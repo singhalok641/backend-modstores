@@ -43,9 +43,3 @@ const Product = module.exports = mongoose.model('Product',ProductSchema);
 module.exports.addProduct = function(newProduct,callback) {
 	newProduct.save(callback);
 }
-
-module.exports.getProductsByCategory = function(category, callback){
-	const query = {category: category}
-	console.log(query);
-	Product.find(query, callback);
-}

@@ -360,13 +360,37 @@ exports.getCart = function(request, response, next){
 }
 
 exports.getProducts = function(request, response, next){
-    var productCategory = request.params.category;
-    console.log(productCategory);
+    var pageNo = parseInt(request.query.pageNo)
+    var size = parseInt(request.query.size)
+    var productCategory = request.params.category
+    var query = {}
 
-    Product.getProductsByCategory(productCategory, function(err, products){
+    if(pageNo < 0 || pageNo === 0) {
+        res = {"error" : true,"message" : "invalid page number, should start with 1"};
+        response.json(res)
+    }
+
+    query.skip = size * (pageNo - 1)
+    query.limit = size
+    //query.category = productCategory
+    
+    /*Product.getProductsByCategory(query, productCategory, function(err, products){
         if(err){
             throw err;
         }
         response.json({success: true, products: products});
-    });
+    });*/
+    Product.count({category: productCategory}, function(err, totalCount){
+        if (err){
+            throw(err)
+        }
+        console.log(totalCount)
+        Product.find({category:productCategory},{},query,function(err,products){
+            if (err){
+                throw err;
+            }
+            var totalPages = Math.ceil(totalCount / size)
+            response.json({success: true, products: products, totalPages: totalPages})
+        });
+    });    
 }
