@@ -2,10 +2,15 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
+var assert = require('assert');
 const config = require('../config/database');
 const Store = require('../models/store');
 const Order = require('../models/orders');
 const users = require('./users');
+var MongoClient = require('mongodb').MongoClient;
+var multer = require('multer');
+var url = 'mongodb://localhost:27017/meanauth';
+
 
 import {pushNotification, listTokenDevice, registerTokenDevice} from '../routes';
 import {secretCodeMiddleware} from '../middlewares';
@@ -41,7 +46,7 @@ router.post('/users/login', users.login);
 //router.get('/users/:id/verify', users.showVerify);
 router.post('/users/:id/verify', users.verify);
 router.post('/users/:id/resend', users.resend);
-//router.get('/users/:id', users.showUser);
+router.get('/users/:id/profile', users.showUser);
 
 //route for addingOrders 
 router.post('/users/addOrder', users.addOrder);
@@ -91,7 +96,7 @@ router.post('/authenticate', (req, res, next) => {
     Store.comparePassword(password, store.password, (err, isMatch) => {
       if(err) throw err;
       if(isMatch){
-        const token = jwt.sign(store.toJSON(), config.secret, {
+        const token = jwt.sign({data:store}, config.secret, {
           expiresIn: 604800 // 1 week
         });
 
@@ -141,9 +146,38 @@ router.get('/orders/:mod_store', (req,res) => {
   });
 });
 
-/*// Profile
+// mod store profile details fetch
 router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res, next) => {
-  res.json({user: req.user});
-});*/
+  res.json({success: true, store: req.user});
+});
+
+var storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, 'public/images/prescriptionUploads/')
+    },
+    filename: (req, file, cb) => {
+      cb(null, file.fieldname + '-' + Date.now())
+    }
+});
+
+var upload = multer({storage: storage});
+
+router.post('/users/prescriptionUpload', upload.single('image'), (req, res, next) => {
+    MongoClient.connect(url, (err, db) => {
+        assert.equal(null, err);
+        insertDocuments(db, 'public/images/prescriptionUploads/' + req.file.filename, () => {
+            db.close();
+            res.json({'message': 'File uploaded successfully'});
+        });
+    });
+});
 
 module.exports = router;
+
+var insertDocuments = function(db, filePath, callback) {
+    var collection = db.collection('user');
+    collection.insertOne({'imagePath' : filePath }, (err, result) => {
+        assert.equal(err, null);
+        callback(result);
+    });
+}

@@ -233,7 +233,7 @@ exports.showUser = function(request, response, next) {
         }
 
         response.json({
-            title: 'Hi there ' + user.fullName + '!',
+            success: true,
             user: user,
             // any errors
             //errors: request.flash('errors'),
