@@ -36,7 +36,7 @@ const SALT_WORK_FACTOR = 10;
 // });
 
 // Define user model schema
-var UserSchema = new mongoose.Schema({
+var UserSchema = mongoose.Schema({
     fullName: {
         type: String,
         required: true,
@@ -151,4 +151,8 @@ UserSchema.methods.sendMessage = function(message, successCallback, errorCallbac
   };
 
 // Export user model
-module.exports = mongoose.model('User', UserSchema);
+const User = module.exports = mongoose.model('User', UserSchema);
+
+module.exports.getUserById = function(id, callback){
+  User.findById(id, callback);
+}

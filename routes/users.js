@@ -3,6 +3,7 @@ const Order = require('../models/orders');
 const Product = require('../models/product');
 const Cart = require('../models/cart');
 const jwt = require('jsonwebtoken');
+const passport = require('passport');
 const config = require('../config/database');
 
 // Display a form that allows users to sign up for a new account
@@ -144,7 +145,7 @@ exports.login = function(request, response) {
         user.comparePassword(password, user.password, (err, isMatch) => {
             if(err) throw err;
             if(isMatch){
-                const token = jwt.sign(user.toJSON(), config.secret, {
+                const token = jwt.sign({data:user, type:"mod-user"}, config.secret, {
                     expiresIn: 604800 // 1 week
                 });
 
@@ -226,7 +227,7 @@ exports.verify = function(request, response) {
 // Show details about the user
 exports.showUser = function(request, response, next) {
     // Load user model
-    User.findById(request.params.id, function(err, user) {
+    /*User.findById(request.params.id, function(err, user) {
         if (err || !user) {
             // 404
             return next();
@@ -240,7 +241,9 @@ exports.showUser = function(request, response, next) {
             // any success messages
             //successes: request.flash('successes'),
         });
-    });
+    });*/
+    passport.authenticate('jwt', {session:false})
+    response.json({success:"hey", user: request.user});
 };
 
 exports.addOrder = function(request, response, next) {

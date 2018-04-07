@@ -46,7 +46,9 @@ router.post('/users/login', users.login);
 //router.get('/users/:id/verify', users.showVerify);
 router.post('/users/:id/verify', users.verify);
 router.post('/users/:id/resend', users.resend);
-router.get('/users/:id/profile', users.showUser);
+router.get('/users/profile',passport.authenticate('jwt', {session:false}), (req, res, next) => {
+  res.json({success: true, user: req.user});
+});
 
 //route for addingOrders 
 router.post('/users/addOrder', users.addOrder);
@@ -96,7 +98,7 @@ router.post('/authenticate', (req, res, next) => {
     Store.comparePassword(password, store.password, (err, isMatch) => {
       if(err) throw err;
       if(isMatch){
-        const token = jwt.sign({data:store}, config.secret, {
+        const token = jwt.sign({data:store, type:"mod-store"},config.secret, {
           expiresIn: 604800 // 1 week
         });
 
@@ -115,6 +117,11 @@ router.post('/authenticate', (req, res, next) => {
       }
     });
   });
+});
+
+// mod store profile details fetch
+router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res, next) => {
+  res.json({success: true, store: req.user});
 });
 
 //Get Store Orders
@@ -144,11 +151,6 @@ router.get('/orders/:mod_store', (req,res) => {
     }
     res.json({past_orders:past_orders, active_orders: active_orders});    
   });
-});
-
-// mod store profile details fetch
-router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res, next) => {
-  res.json({success: true, store: req.user});
 });
 
 var storage = multer.diskStorage({
