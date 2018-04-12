@@ -3,11 +3,11 @@ const config = require('../config/database');
 
 //General Schema
 const CartSchema = mongoose.Schema({
-	cart_id:{
+/*	cart_id:{
 		type:Number,
 		required:true,
 		unique:true
-	},
+	},*/
 	items:{
 		type:Object,
 		required:true

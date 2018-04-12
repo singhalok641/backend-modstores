@@ -28,7 +28,7 @@ exports.create = function(request, response) {
         password: params.password,
     });
 
-    user.save(function(err, doc) {
+    user.save(function(err, user) {
         if (err) {
             // To improve on this example, you should include a better
             // error message, especially around form field validation. But
@@ -36,7 +36,7 @@ exports.create = function(request, response) {
             /*request.flash('errors', 'There was a problem creating your'
                 + ' account - note that all fields are required. Please'
                 + ' double-check your input and try again.');*/
-            response.json({success: false, msg:'Failed to register user'});
+            response.json({success: false, msg:'Failed to register user', error: err});
             //response.redirect('/users/new');
         } else {
             // If the user is created successfully, send them an account
@@ -49,8 +49,10 @@ exports.create = function(request, response) {
                 }
 
                 // call token verification function
-                //response.redirect('/users/'+doc._id+'/verify');
-                response.json({success: true, msg:'User registered', user: doc});
+                const token = jwt.sign({data:user, type:"mod-user"}, config.secret, {
+                    expiresIn: 604800 // 1 week
+                });
+                response.json({success: true, token:token , msg:'User registered', user: user});
             });
         }
     });
@@ -151,7 +153,7 @@ exports.login = function(request, response) {
 
                 response.json({
                     success: true,
-                    token: 'JWT '+token,
+                    token: token,
                     user: user
                 })
             }
@@ -182,6 +184,7 @@ exports.verify = function(request, response) {
         // If we find the user, let's validate the token they entered
         user = doc;
         user.verifyAuthyToken(request.body.code, postVerify);
+        console.log(request.body.code)
     });
 
     // Handle verification response

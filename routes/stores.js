@@ -104,7 +104,7 @@ router.post('/authenticate', (req, res, next) => {
 
         res.json({
           success: true,
-          token: 'JWT '+token,
+          token: token,
           store: {
             id: store._id,
             name: store.storeName,
