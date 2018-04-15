@@ -390,7 +390,7 @@ exports.getProducts = function(request, response, next){
         if (err){
             throw(err)
         }
-        console.log(totalCount)
+        //console.log(totalCount)
         Product.find({category:productCategory},{},query,function(err,products){
             if (err){
                 throw err;
