@@ -164,7 +164,7 @@ var storage = multer.diskStorage({
 
 var upload = multer({storage: storage});
 
-router.post('/users/prescriptionUpload', upload.single('image'), (req, res, next) => {
+router.post('/users/prescriptionUpload', upload.single('photo'), (req, res, next) => {
     MongoClient.connect(url, (err, db) => {
         assert.equal(null, err);
         insertDocuments(db, 'public/images/prescriptionUploads/' + req.file.filename, () => {
