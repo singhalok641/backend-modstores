@@ -1,4 +1,5 @@
-export const SECRET_CODE = 'MODAPP';
+const SECRET_CODE = 'MODAPP';
+module.exports = SECRET_CODE;
 const dotenvSafe = require('dotenv-safe');
 
 const nodeEnv = process.env.NODE_ENV;
@@ -41,7 +42,3 @@ cfg.mongoUrl = process.env.MONGODB_URI || process.env.MONGO_URL;
 
 // Export configuration object
 module.exports = cfg;
-
-export default  {
-	SECRET_CODE
-}

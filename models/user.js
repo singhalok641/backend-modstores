@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const config = require('../config');
 
 // Create authenticated Authy and Twilio API clients
