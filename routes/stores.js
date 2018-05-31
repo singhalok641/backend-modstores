@@ -169,7 +169,7 @@ router.post('/users/prescriptionUpload', upload.single('photo'), (req, res, next
         assert.equal(null, err);
         insertDocuments(db, 'public/images/prescriptionUploads/' + req.file.filename, () => {
             db.close();
-            res.json({'message': 'File uploaded successfully'});
+            res.json(req.file);
         });
     });
 });
