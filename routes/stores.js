@@ -13,13 +13,13 @@ var url = 'mongodb://159.89.168.254:27017/mod';
 
 //import {pushNotification, listTokenDevice, registerTokenDevice} from '../routes';
 //import {secretCodeMiddleware} from '../middlewares';
-const pushNotification = require('./pushNotification');
-const listTokenDevice = require('./listTokenDevice');
-const secretCodeMiddleware = require('../middlewares/secretCodeMiddleware');  
+//const pushNotification = require('./pushNotification');
+//const listTokenDevice = require('./listTokenDevice');
+//const secretCodeMiddleware = require('../middlewares/secretCodeMiddleware');  
 /**
  * List token device
  */
-router.get('/list-token-device', listTokenDevice)
+//router.get('/list-token-device', listTokenDevice)
 
 /**
  * Push notification
@@ -27,14 +27,14 @@ router.get('/list-token-device', listTokenDevice)
  * @message: string
  * @data: object
  */
-router.post('/push-notification', pushNotification);
+//router.post('/push-notification', pushNotification);
 
 /**
  * Register token device
  * @tokenDevice: string
  * @userId: string
  */
-router.post('/register-token-device', secretCodeMiddleware, registerTokenDevice)
+//router.post('/register-token-device', secretCodeMiddleware, registerTokenDevice)
 
 
 //ROUTES FOR MOD USER APP
