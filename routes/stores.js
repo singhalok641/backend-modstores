@@ -11,11 +11,11 @@ var MongoClient = require('mongodb').MongoClient;
 var multer = require('multer');
 var url = 'mongodb://159.89.168.254:27017/mod';
 
-import {pushNotification, listTokenDevice, registerTokenDevice} from '../routes';
-import {secretCodeMiddleware} from '../middlewares';
-/*const pushNotification = require('./pushNotification');
+//import {pushNotification, listTokenDevice, registerTokenDevice} from '../routes';
+//import {secretCodeMiddleware} from '../middlewares';
+const pushNotification = require('./pushNotification');
 const listTokenDevice = require('./listTokenDevice');
-const secretCodeMiddleware = require('../middlewares/secretCodeMiddleware'); */ 
+const secretCodeMiddleware = require('../middlewares/secretCodeMiddleware');  
 /**
  * List token device
  */

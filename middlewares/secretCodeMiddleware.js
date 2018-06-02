@@ -1,11 +1,10 @@
-//import {SECRET_CODE} from '../config';
-const config = require('../config/database');
+import {SECRET_CODE} from '../config';
 
 export default function secretCodeMiddleware(req, res, next) {
 	const secretCode = req.body.secretCode || req.query.secretCode;
-	console.log(config.secret);
-	console.log(secretCode);
-	if (secretCode === config.secret) {
+	//console.log(req.body);
+	//console.log(secretCode);
+	if (secretCode === SECRET_CODE) {
 		next();
 	}
 	else {
