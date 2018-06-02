@@ -14,11 +14,13 @@ var url = 'mongodb://localhost:27017/meanauth';
 
 //import {pushNotification, listTokenDevice, registerTokenDevice} from '../routes';
 //import {secretCodeMiddleware} from '../middlewares';
-
+const pushNotification = require('./pushNotification');
+const listTokenDevice = require('./listTokenDevice');
+const secretCodeMiddleware = require('../middlewares/secretCodeMiddleware');  
 /**
  * List token device
  */
-//router.get('/list-token-device', listTokenDevice)
+router.get('/list-token-device', listTokenDevice)
 
 /**
  * Push notification
@@ -26,14 +28,14 @@ var url = 'mongodb://localhost:27017/meanauth';
  * @message: string
  * @data: object
  */
-//router.post('/push-notification', pushNotification);
+router.post('/push-notification', pushNotification);
 
 /**
  * Register token device
  * @tokenDevice: string
  * @userId: string
  */
-//router.post('/register-token-device', secretCodeMiddleware, registerTokenDevice)
+router.post('/register-token-device', secretCodeMiddleware, registerTokenDevice)
 
 
 //ROUTES FOR MOD USER APP
