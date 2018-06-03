@@ -10,7 +10,7 @@ module.exports = function(passport){
   opts.secretOrKey = config.secret;
   passport.use(new JwtStrategy(opts, (jwt_payload, done) => {
     if(jwt_payload.type==='mod-store'){
-      console.log('not here')
+      console.log('for mod - store')
       Store.getStoreById(jwt_payload.data._id, (err, store) => {
         if(err){
           return done(err, false);
@@ -24,7 +24,7 @@ module.exports = function(passport){
       });
     }
     else{
-      console.log('hey there');
+      console.log('for mod - user');
       User.getUserById(jwt_payload.data._id, (err, user) => {
         if(err){
           return done(err, false);
