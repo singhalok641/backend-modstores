@@ -250,7 +250,7 @@ exports.showUser = function(request, response, next) {
 };
 
 exports.addOrder = function(request, response, next) {
-
+    console.log(request.session.cart);
     if(!request.session.cart){
         response.json({message:"session expired"});
     }
@@ -259,21 +259,21 @@ exports.addOrder = function(request, response, next) {
 
     let newOrder = new Order({
         order_id:request.body.order_id,
-        status:request.body.status,
+        //status:request.body.status,
         cart:cart,
         // itemsRequiringPrescription:request.body.itemsRequiringPrescription,
         // itemsNotRequiringPrescription:request.body.itemsNotRequiringPrescription,
-        prescription:request.body.prescription,
-        order_time:request.body.order_time,
-        delivery_time:request.body.delivery_time,
-        delivery_address:request.body.delivery_address,
+        //prescription:request.body.prescription,
+        //order_time:request.body.order_time,
+        //delivery_time:request.body.delivery_time,
+        //delivery_address:request.body.delivery_address,
         //mrp_total:request.body.mrp_total,
         //coupon:request.body.coupon,
         //discount:request.body.discount,
         //delivery_charge:request.body.delivery_charge,
         //total:request.body.total,
-        payment_mode:request.body.payment_mode,
-        payment_id:request.body.payment_id,
+        //payment_mode:request.body.payment_mode,
+        //payment_id:request.body.payment_id,
         store_id:request.body.store_id
     })
 
@@ -316,6 +316,7 @@ exports.addToCart = function(request, response, next) {
         }
         cart.add(product, product_id);
         request.session.cart = cart;
+        console.log(request.session.cart);
         //console.log(cart);
         /*Cart.addCart(cart, (err, cart) => {
             if(err){
@@ -358,6 +359,7 @@ exports.removeItem = function(request, response, next) {
 }
 
 exports.getCart = function(request, response, next){
+    console.log(request.session.cart);
     if (!request.session.cart) {
         response.json({products: null});
     } 

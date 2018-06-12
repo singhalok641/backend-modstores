@@ -12,7 +12,7 @@ const OrderSchema = mongoose.Schema({
 		type: Object, 
 		required: true
 	},
-	status:{
+	/*status:{
 		type:String,
 		required:true
 	},
@@ -38,7 +38,7 @@ const OrderSchema = mongoose.Schema({
 	payment_id:{
 		type:String,
 		required: true
-	},
+	},*/
 	store_id:{
 		type:String,
 		required:true
