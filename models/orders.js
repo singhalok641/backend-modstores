@@ -10,7 +10,7 @@ var counter = mongoose.model('counter', CounterSchema);
 //General Schema
 const OrderSchema = mongoose.Schema({
 	order_id:{
-		type: String
+		type: String,
 		required: true,
 		unique: true
 	},
@@ -18,33 +18,6 @@ const OrderSchema = mongoose.Schema({
 		type: Object, 
 		required: true
 	},
-	/*status:{
-		type:String,
-		required:true
-	},
-	prescription:{
-		type:String
-	},
-	order_time:{
-		type:Date,
-		//required:true
-	},
-	delivery_time:{
-		type:Date,
-		//required:true
-	},
-	delivery_address:{
-		type:String,
-		required:true
-	},
-	payment_mode:{
-		type:String,
-		required:true
-	},
-	payment_id:{
-		type:String,
-		required: true
-	},*/
 	store_id:{
 		type:String,
 		required:true
