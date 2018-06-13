@@ -258,9 +258,9 @@ exports.addOrder = function(request, response, next) {
     var cart = new Cart(request.session.cart);
 
     let newOrder = new Order({
-        order_id:request.body.order_id,
         //status:request.body.status,
         cart:cart,
+        delivery_address: request.body.delivery_address,
         // itemsRequiringPrescription:request.body.itemsRequiringPrescription,
         // itemsNotRequiringPrescription:request.body.itemsNotRequiringPrescription,
         //prescription:request.body.prescription,
