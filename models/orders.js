@@ -11,7 +11,6 @@ var counter = mongoose.model('counter', CounterSchema);
 const OrderSchema = mongoose.Schema({
 	order_id:{
 		type: String,
-		required: true,
 		unique: true
 	},
 	cart: {

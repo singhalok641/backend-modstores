@@ -134,7 +134,7 @@ router.get('/orders/:mod_store', (req,res) => {
     }
     //console.log(orders);
     //Divide the Store orders into active and past orders depending on the status value of the particular order
-    var past_orders=[];
+    /*var past_orders=[];
     var active_orders=[];
 
     //Loop to divide the orders
@@ -150,7 +150,8 @@ router.get('/orders/:mod_store', (req,res) => {
         active_orders.push(orders[k]);
       }
     }
-    res.json({past_orders:past_orders, active_orders: active_orders});    
+    res.json({past_orders:past_orders, active_orders: active_orders});*/
+    res.json({orderRequests: orders})    
   });
 });
 
