@@ -250,7 +250,7 @@ exports.showUser = function(request, response, next) {
 };
 
 exports.addOrder = function(request, response, next) {
-    console.log(request.session.cart);
+    //console.log(request.session.cart);
     if(!request.session.cart){
         response.json({message:"session expired"});
     }
@@ -316,7 +316,7 @@ exports.addToCart = function(request, response, next) {
         }
         cart.add(product, product_id);
         request.session.cart = cart;
-        console.log(request.session.cart);
+        //console.log(request.session.cart);
         //console.log(cart);
         /*Cart.addCart(cart, (err, cart) => {
             if(err){
@@ -335,7 +335,7 @@ exports.reduceByOne = function(request, response, next) {
     var cart = new Cart(request.session.cart ? request.session.cart : {});
     cart.reduceByOne(productId);
     request.session.cart = cart;
-    console.log(request.session.cart);
+    //console.log(request.session.cart);
     response.json({success:true, message:"item reduced by one"});
 }
 
@@ -359,7 +359,7 @@ exports.removeItem = function(request, response, next) {
 }
 
 exports.getCart = function(request, response, next){
-    console.log(request.session.cart);
+    //console.log(request.session.cart);
     if (!request.session.cart) {
         response.json({products: null});
     } 

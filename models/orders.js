@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 const config = require('../config/database');
 
-var CounterSchema = mongoose.Schema({
+const CounterSchema = mongoose.Schema({
     _id: {type: String, required: true},
     seq: { type: Number, default: 0 }
 });
-var counter = mongoose.model('counter', CounterSchema);
+const counter = mongoose.model('counter', CounterSchema);
 
 //General Schema
 const OrderSchema = mongoose.Schema({
@@ -39,8 +39,7 @@ const OrderSchema = mongoose.Schema({
 	}
 });
 
-const Order = module.exports = mongoose.model('Order',OrderSchema);
-
+// Middleware executed to auto increment order_id by 1
 OrderSchema.pre('save', function(next) {
     var doc = this;
     counter.findByIdAndUpdate({_id: 'order_id'}, {$inc: { seq: 1} }, function(error, counter)   {
@@ -50,6 +49,9 @@ OrderSchema.pre('save', function(next) {
         next();
     });
 });
+
+const Order = module.exports = mongoose.model('Order',OrderSchema);
+
 
 module.exports.getOrdersByStore = function(store_id,callback) {
 	const query = {store_id: store_id}
