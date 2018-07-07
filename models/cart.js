@@ -74,6 +74,14 @@ module.exports = function Cart(oldCart) {
         delete this.items[id];
 	};
 
+	this.emptyCart = function() {
+		for (var id in this.items){
+			delete this.items[id];
+			this.totalPrice = 0;
+			this.totalQty = 0;
+		}
+	};
+
 	this.generateArray = function(){
 		var arr = [];
 		for (var id in this.items){

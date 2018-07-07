@@ -64,6 +64,7 @@ router.get('/users/addToCart/:id', users.addToCart);
 router.get('/users/reduceByOne/:id',users.reduceByOne);
 router.get('/users/increaseByOne/:id',users.increaseByOne);
 router.get('/users/removeItem/:id',users.removeItem);
+router.get('/users/emptyCart', users.emptyCart);
 router.get('/users/getCart', users.getCart);
 
 //ROUTES FOR MOD STORE APP
@@ -154,6 +155,10 @@ router.get('/orders/:mod_store', (req,res) => {
     res.json({orderRequests: orders})    
   });
 });
+
+/*router.get('/orders/:mod_store/reduceByOne/:id', (req,res) => {
+  var productId = request.params.id;
+})*/
 
 var storage = multer.diskStorage({
     destination: (req, file, cb) => {

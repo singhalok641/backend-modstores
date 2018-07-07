@@ -351,11 +351,18 @@ exports.increaseByOne = function(request, response, next) {
 exports.removeItem = function(request, response, next) {
     var productId = request.params.id;
     var cart = new Cart(request.session.cart ? request.session.cart : {});
-
     cart.removeItem(productId);
     request.session.cart = cart;
     console.log(request.session.cart);
     response.json({success: true, message:"removed item"});
+}
+
+exports.emptyCart = function(request, response, next) {
+    var cart = new Cart(request.session.cart ? request.session.cart : {});
+    cart.emptyCart();
+    request.session.cart = cart;
+    console.log(request.session.cart);
+    response.json({success: true, message:"cart emptied"});
 }
 
 exports.getCart = function(request, response, next){
