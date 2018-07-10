@@ -52,54 +52,36 @@ OrderSchema.pre('save', function(next) {
 
 const Order = module.exports = mongoose.model('Order',OrderSchema);
 
-
 module.exports.getOrdersByStore = function(store_id,callback) {
 	const query = {store_id: store_id}
   	Order.find(query, callback);
 }
 
-module.exports.addOrder = function(newOrder,callback) {
+module.exports.getOrderById = function(id, callback){
+  Order.findById(id, callback);
+}
+
+module.exports.addOrder = function(newOrder, callback) {
 	newOrder.save(callback);
 }
 
-module.exports.editCart = function(oldCart, callback) {
-	this.items = oldCart.items || {};
-	this.totalQty = oldCart.totalQty || 0;
-	this.totalPrice = oldCart.totalPrice || 0;
+/*module.exports.reduceItemByOne = function(order, callback) {
+	var cart = order.cart;
+    console.log(cart);
+    cart.items[productId].qty--;
+    cart.items[productId].price -= cart.items[productId].item.price;
+    cart.totalQty--;
+    cart.totalPrice -= cart.items[productId].item.price;
 
-	this.reduceByOne = function(id) {
-        this.items[id].qty--;
-        this.items[id].price -= this.items[id].item.price;
-        this.totalQty--;
-        this.totalPrice -= this.items[id].item.price;
+    if (cart.items[productId].qty <= 0) {
+      delete cart.items[productId];
+    }	
 
-        if (this.items[id].qty <= 0) {
-            delete this.items[id];
-        }
-	};
-
-	this.increaseByOne = function(id) {
-        this.items[id].qty++;
-        this.items[id].price += this.items[id].item.price;
-        this.totalQty++;
-        this.totalPrice += this.items[id].item.price;
-
-        /*if (this.items[id].qty <= 0) {
-            delete this.items[id];
-        }*/
-	};
-
-	this.removeItem = function(id) {
-        this.totalQty -= this.items[id].qty;
-        this.totalPrice -= this.items[id].price;
-        delete this.items[id];
-	};
-
-	this.generateArray = function(){
-		var arr = [];
-		for (var id in this.items){
-			arr.push(this.items[id]);
-		}
-		return arr;
-	};
-}
+    Order.findByIdAndUpdate(
+    	order._id, cart, {new: true}, (err, todo => {
+    		if (err) return res.status(500).send(err);
+    		res.json({error: err})
+    	})
+    	res.json({message: "reduced by one", cart: cart}); 
+    	)
+}*/

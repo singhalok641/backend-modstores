@@ -130,7 +130,7 @@ router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res,
 router.get('/orders/:mod_store', (req,res) => {
   console.log(req.params.mod_store);
   Order.getOrdersByStore(req.params.mod_store, function(err,orders){
-    if(err){
+    if (err) {
       throw err;
     }
     //console.log(orders);
@@ -156,9 +156,31 @@ router.get('/orders/:mod_store', (req,res) => {
   });
 });
 
-/*router.get('/orders/:mod_store/reduceByOne/:id', (req,res) => {
-  var productId = request.params.id;
-})*/
+router.get('/orders/reduceByOne/:id/:product_id', (req,res) => {
+  var orderId = req.params.id;
+  var productId = req.params.product_id;
+  Order.getOrderById(orderId, function(err,order) {
+    if (err) {
+      throw err;
+    }
+    var cart = order.cart;
+    cart.items[productId].qty--;
+    cart.items[productId].price -= cart.items[productId].item.price;
+    cart.totalQty--;
+    cart.totalPrice -= cart.items[productId].item.price;
+
+    if (cart.items[productId].qty <= 0) {
+      delete cart.items[productId];
+    }
+    order.cart = cart;
+    Order.findByIdAndUpdate(orderId, order, {new:true}, function(err, order) {
+      if (err) {
+        throw err;
+      }    
+    })
+    res.json({message: "reduced by one", order: order});
+  });
+})
 
 var storage = multer.diskStorage({
     destination: (req, file, cb) => {
