@@ -156,6 +156,29 @@ router.get('/orders/:mod_store', (req,res) => {
   });
 });
 
+router.get('/orders/increaseByOne/:id/:product_id', (req,res) => {
+  var orderId = req.params.id;
+  var productId = req.params.product_id;
+  Order.getOrderById(orderId, function(err,order) {
+    if (err) {
+      throw err;
+    }
+    var cart = order.cart;
+    cart.items[productId].qty++;
+    cart.items[productId].price += cart.items[productId].item.price;
+    cart.totalQty++;
+    cart.totalPrice += cart.items[productId].item.price;
+
+    order.cart = cart;
+    Order.findByIdAndUpdate(orderId, order, {new:true}, function(err, order) {
+      if (err) {
+        throw err;
+      }    
+    })
+    res.json({message: "increase by one", order: order});
+  });
+})
+
 router.get('/orders/reduceByOne/:id/:product_id', (req,res) => {
   var orderId = req.params.id;
   var productId = req.params.product_id;
