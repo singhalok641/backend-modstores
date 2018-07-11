@@ -175,7 +175,7 @@ router.get('/orders/increaseByOne/:id/:product_id', (req,res) => {
         throw err;
       }    
     })
-    res.json({message: "increase by one", order: order});
+    res.json({success: true, message: "increase by one", order: order});
   });
 })
 
@@ -201,7 +201,7 @@ router.get('/orders/reduceByOne/:id/:product_id', (req,res) => {
         throw err;
       }    
     })
-    res.json({message: "reduced by one", order: order});
+    res.json({success: true, message: "reduced by one", order: order});
   });
 })
 
