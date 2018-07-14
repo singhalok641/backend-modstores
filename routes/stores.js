@@ -152,7 +152,21 @@ router.get('/orders/:mod_store', (req,res) => {
       }
     }
     res.json({past_orders:past_orders, active_orders: active_orders});*/
-    res.json({orderRequests: orders})    
+    var requestedOrders = [];
+    var pastOrders = [];
+    var activeOrders = [];
+    for(var k =0;k<orders.length;k++) {
+      if (orders[k].status == 'Request') {
+        requestedOrders.push(orders[k]);
+      }
+      else if (orders[k].status=='Delivered'||orders[k].status=='Cancelled') {
+        pastOrders.push(orders[k]);
+      }
+      else {
+        activeOrders.push(orders[k]);
+      }
+    }
+    res.json({ orderRequests: orders, activeOrders: activeOrders, pastOrders: pastOrders })    
   });
 });
 
@@ -195,14 +209,58 @@ router.get('/orders/reduceByOne/:id/:product_id', (req,res) => {
     if (cart.items[productId].qty <= 0) {
       delete cart.items[productId];
     }
-    order.cart = cart;
+
+    if(cart.totalQty > 0) {
+      order.cart = cart;
+      Order.findByIdAndUpdate(orderId, order, {new:true}, function(err, order) {
+        if (err) {
+          throw err;
+        }    
+      })
+    }
+    else {
+      Order.findByIdAndRemove(orderId, function(err, order) {
+        if (err) {
+          throw err;
+        }
+      })
+    }
+    res.json({success: true, message: "reduced by one", order: order});
+  });
+})
+
+router.get('/orders/acceptOrder/:id', (req,res) => {
+  var orderId = req.params.id;
+  Order.getOrderById(orderId, function(err,order) {
+    if (err) {
+      throw err;
+    }
+    console.log(order)
+    order.orderStatus = "Waiting";
     Order.findByIdAndUpdate(orderId, order, {new:true}, function(err, order) {
       if (err) {
         throw err;
-      }    
+      }
     })
-    res.json({success: true, message: "reduced by one", order: order});
-  });
+    res.json({success: true, message: "changed status to waiting", order: order});
+  });  
+})
+
+router.get('/orders/declineOrder/:id', (req,res) => {
+  var orderId = req.params.id;
+  Order.getOrderById(orderId, function(err,order) {
+    if (err) {
+      throw err;
+    }
+    console.log(order)
+    order.orderStatus = "Declined";
+    Order.findByIdAndUpdate(orderId, order, {new:true}, function(err, order) {
+      if (err) {
+        throw err;
+      }
+    })
+    res.json({success: true, message: "changed status to declined", order: order});
+  });  
 })
 
 var storage = multer.diskStorage({

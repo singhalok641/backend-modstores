@@ -64,24 +64,3 @@ module.exports.getOrderById = function(id, callback){
 module.exports.addOrder = function(newOrder, callback) {
 	newOrder.save(callback);
 }
-
-/*module.exports.reduceItemByOne = function(order, callback) {
-	var cart = order.cart;
-    console.log(cart);
-    cart.items[productId].qty--;
-    cart.items[productId].price -= cart.items[productId].item.price;
-    cart.totalQty--;
-    cart.totalPrice -= cart.items[productId].item.price;
-
-    if (cart.items[productId].qty <= 0) {
-      delete cart.items[productId];
-    }	
-
-    Order.findByIdAndUpdate(
-    	order._id, cart, {new: true}, (err, todo => {
-    		if (err) return res.status(500).send(err);
-    		res.json({error: err})
-    	})
-    	res.json({message: "reduced by one", cart: cart}); 
-    	)
-}*/
