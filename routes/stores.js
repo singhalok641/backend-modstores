@@ -155,18 +155,20 @@ router.get('/orders/:mod_store', (req,res) => {
     var requestedOrders = [];
     var pastOrders = [];
     var activeOrders = [];
-    for(var k =0;k<orders.length;k++) {
-      if (orders[k].status == 'Request') {
+    for(var k=0;k<orders.length;k++) {
+      if (orders[k].orderStatus === 'Request') {
         requestedOrders.push(orders[k]);
+        //console.log(orders[k])
       }
-      else if (orders[k].status=='Delivered'||orders[k].status=='Cancelled') {
+      else if (orders[k].orderStatus === 'Delivered' || orders[k].orderStatus === 'Cancelled' || orders[k].orderStatus === 'Declined') {
         pastOrders.push(orders[k]);
+        //console.log(orders[k])
       }
       else {
         activeOrders.push(orders[k]);
       }
     }
-    res.json({ orderRequests: orders, activeOrders: activeOrders, pastOrders: pastOrders })    
+    res.json({ orderRequests: requestedOrders, activeOrders: activeOrders, pastOrders: pastOrders })    
   });
 });
 
